@@ -81,4 +81,9 @@ public class MachineGun extends  GameObject
         rateOfFire += 2;
     }
 
+    public void setFireRate(int rate)
+    {
+        rateOfFire = rate;
+    }
+
 }

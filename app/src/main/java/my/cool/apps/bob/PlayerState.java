@@ -58,6 +58,10 @@ public class PlayerState
     {
         lives--;
     }
+    public int getLives()
+    {
+        return lives;
+    }
 
 
 }

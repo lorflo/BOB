@@ -60,6 +60,9 @@ public class PlatformView extends SurfaceView implements Runnable {
         vp.setWorldCenter(
                 lm.gameObjects.get(lm.playerIndex).getWorldLocation().x,
                 lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
+        // reload the players current fire rate from the player state
+        lm.getPlayer().getBfg().setFireRate(ps.getMgFireRate());
+
     }
 
     @Override
@@ -148,6 +151,13 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 lm.getPlayer().setWorldLocationY(ps.loadLocation().y);
                                 lm.getPlayer().setxVelocity(0);
                                 break;
+                            case 't':
+                                Teleport teleport = (Teleport) go;
+                                Location target = teleport.getTarget();
+                                loadLevel(target.level, target.x, target.y);
+                                soundManager.play(SoundManager.Sound.TELEPORT);
+                                break;
+
 
                         }
 
@@ -185,6 +195,22 @@ public class PlatformView extends SurfaceView implements Runnable {
                              Drone d = (Drone) go;
                              d.setWaypoint(lm.getPlayer().getWorldLocation());
                          }
+                         // has player fallen out of the map?
+                         if (lm.getPlayer().getWorldLocation().x < 0 || lm.getPlayer().getWorldLocation().x > lm.getMapWidth()
+                                 || lm.getPlayer().getWorldLocation().y > lm.getMapHeight()) {
+                             soundManager.play(SoundManager.Sound.EXPLODE);
+                             ps.loseLife();
+                             PointF location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                             lm.getPlayer().setWorldLocationX(location.x);
+                             lm.getPlayer().setWorldLocationY(location.y);
+                             lm.getPlayer().setxVelocity(0);
+                         }
+                         // check if game is over
+                         if (ps.getLives() == 0) {
+                             ps = new PlayerState();
+                             loadLevel("LevelCave", 1, 16);
+                         }
+
 
                      }
                 }
@@ -204,6 +230,23 @@ public class PlatformView extends SurfaceView implements Runnable {
             Rect toScreen2d = new Rect();
 
             drawBackground(0, -3);  // behind Bob (at z=0)
+            // draw the HUD
+            int topSpace = (int)vp.getPixelsPerMeterY() / 4;
+            int iconSize = (int)vp.getPixelsPerMeterX();
+            int padding = (int)vp.getPixelsPerMeterX() / 5;
+            int centring = (int)vp.getPixelsPerMeterY() / 6;
+            paint.setTextSize(vp.getPixelsPerMeterY() / 2);
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setColor(Color.argb(100, 0, 0, 0));
+            canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
+            paint.setColor(Color.argb(255, 255, 255, 0));
+            canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
+            canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, iconSize - centring, paint);
+            canvas.drawBitmap(lm.getBitmap('c'), iconSize * 2.5f + padding, topSpace, paint);
+            canvas.drawText("" + ps.getNumCredits(), (iconSize * 3.5f) + padding * 2, iconSize - centring, paint);
+            canvas.drawBitmap(lm.getBitmap('u'), iconSize * 5.0f + padding, topSpace, paint);
+            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);
+
 
             for (int layer = -1; layer <= 1; layer++) {
                 for (GameObject go : lm.gameObjects) {
@@ -277,9 +320,9 @@ public class PlatformView extends SurfaceView implements Runnable {
                 // clip anything off-screen
                 if (!vp.clipObject(-1, bg.y, 1000, bg.height)) {
                     int startY = (int) (vp.getyCentre() -  (vp.getViewportWorldCentreY() - bg.y) *
-                            vp.getPixelsPerMetreY());
+                            vp.getPixelsPerMeterY());
                     int endY = (int) (vp.getyCentre() - (vp.getViewportWorldCentreY() - bg.endY) *
-                            vp.getPixelsPerMetreY());
+                            vp.getPixelsPerMeterY());
 
                     // define what portion of bitmaps to capture and what coordinates to draw them at
                     fromRect1 = new Rect(0, 0, bg.width - bg.xClip,  bg.height);

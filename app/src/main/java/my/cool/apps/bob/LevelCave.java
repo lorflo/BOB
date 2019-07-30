@@ -1,7 +1,5 @@
 package my.cool.apps.bob;
 
-import android.location.Location;
-
 import java.util.ArrayList;
 
 public class LevelCave extends LevelData {
@@ -32,7 +30,7 @@ public class LevelCave extends LevelData {
 
                 // declare the values for the teleports in order of appearance
                 locations = new ArrayList<>();
-                //locations.add(new Location("LevelCity", 118f, 18f));
+                locations.add(new Location("LevelCity", 118f, 18f));
 
                 backgroundDataList = new ArrayList<>();
                 // note that speeds less than 2 cause problems

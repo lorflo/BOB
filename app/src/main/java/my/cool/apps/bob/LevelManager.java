@@ -32,6 +32,16 @@ public class LevelManager {
             case "LevelCave":
                 levelData = new LevelCave();
                 break;
+            case "LevelCity":
+                levelData = new LevelCity();
+                break;
+            case "LevelForest":
+                levelData = new LevelForest();
+                break;
+            case "LevelMountain":
+                levelData = new LevelMountain();
+                break;
+
         }
         gameObjects = new ArrayList<>();
         bitmapsArray = new Bitmap[25];
@@ -97,6 +107,31 @@ public class LevelManager {
             case '7':
                 index = 14;
                 break;
+            case 'w':
+                index = 15;
+                break;
+            case 'x':
+                index = 16;
+                break;
+            case 'l':
+                index = 17;
+                break;
+            case 'r':
+                index = 18;
+                break;
+            case 's':
+                index = 19;
+                break;
+            case 'm':
+                index = 20;
+                break;
+            case 'z':
+                index = 21;
+                break;
+            case 't':
+                index = 22;
+                break;
+
             default:
                 index = 0;
                 break;
@@ -139,6 +174,8 @@ public class LevelManager {
 
     private void loadMapData(Context context, int pixelsPerMeter, float px, float py) {
         int currentIndex = -1;
+        int teleportIndex = -1;
+
         mapHeight = levelData.tiles.size();
         mapWidth = levelData.tiles.get(0).length();
         for (int i = 0; i < levelData.tiles.size(); i++) {
@@ -192,6 +229,33 @@ public class LevelManager {
                         case '7':    // Add a tile to the gameObjects
                             gameObjects.add(new Stone(j, i, c));
                             break;
+                        case 'w':    // Add a tree to the gameObjects
+                            gameObjects.add(new Tree(j, i, c));
+                            break;
+                        case 'x':    // Add a tree2 to the gameObjects
+                            gameObjects.add(new Tree2(j, i, c));
+                            break;
+                        case 'l':    // Add a tree to the gameObjects
+                            gameObjects.add(new Lampost(j, i, c));
+                            break;
+                        case 'r':    // Add a stalactite to the gameObjects
+                            gameObjects.add(new Stalactite(j, i, c));
+                            break;
+                        case 's':    // Add a stalagmite to the gameObjects
+                            gameObjects.add(new Stalagmite(j, i, c));
+                            break;
+                        case 'm':    // Add a cart to the gameObjects
+                            gameObjects.add(new Cart(j, i, c));
+                            break;
+                        case 'z':    // Add a boulders to the gameObjects
+                            gameObjects.add(new Boulder(j, i, c));
+                            break;
+                        case 't':
+                            teleportIndex++;
+                            gameObjects.add(new Teleport(j, i, c,
+                                    levelData.locations.get(teleportIndex)));
+                            break;
+
                     }
                     if (getBitmap(c) == null) {
                         GameObject go = gameObjects.get(currentIndex);

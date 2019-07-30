@@ -113,7 +113,10 @@ public class Viewport {
         return currentViewportWorldCenter.y;
     }
 
-    public float getPixelsPerMetreY() {
+    public float getPixelsPerMeterY() {
         return pixelsPerMeterY;
+    }
+    public float getPixelsPerMeterX() {
+        return pixelsPerMeterX;
     }
 }
