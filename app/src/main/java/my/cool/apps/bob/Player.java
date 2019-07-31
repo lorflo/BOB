@@ -22,6 +22,7 @@ public class Player extends GameObject
 
 
 
+
     public Player(Context context, float worldStartX,
                   float worldStartY, int pixelsPerMetre) {
         final float HEIGHT = 2;
@@ -105,7 +106,10 @@ public class Player extends GameObject
             setFacing(LEFT);
         }
     }
+   public void draw(Canvas canvas,LevelManager lm,Rect toScreen2d)
+   {
 
+   }
     public int checkCollisions(RectHitbox rectHitbox) {
         int collided = 0; // no collision
         if (this.rectHitboxLeft.intersects(rectHitbox)) {

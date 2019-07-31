@@ -201,6 +201,9 @@ public class LevelManager {
                         case 'e':
                             gameObjects.add(new ExtraLife(context,j, i, c, pixelsPerMeter));
                             break;
+                        case 'o':
+                            gameObjects.add(new ShieldPickup(context,j,i,c,pixelsPerMeter));
+                            break;
                         case 'd':
                             gameObjects.add(new Drone(j, i, c));
                             break;

@@ -7,6 +7,7 @@ public class PlayerState
     private int numCredits;
     private int mgFireRate;
     private int lives;
+    private int sheild;
     private float restartX = 0;
     private float restartY = 0;
     private PointF loc;
