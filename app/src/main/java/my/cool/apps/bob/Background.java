@@ -34,6 +34,7 @@ public class Background {
                (int)(endY* yPixelsPerMetre), true);
         width = bitmap.getWidth();
         height = bitmap.getHeight();
+        System.out.println(height);
 
         // create a mirror image of the background
         Matrix matrix = new Matrix();

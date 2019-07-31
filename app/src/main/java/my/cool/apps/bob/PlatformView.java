@@ -226,8 +226,8 @@ public class PlatformView extends SurfaceView implements Runnable {
 
         if (holder.getSurface().isValid()){
             canvas = holder.lockCanvas();
-            paint.setColor(Color.argb(255, 0, 0, 255));
-            canvas.drawColor(Color.argb(255, 0, 0, 255));
+            paint.setColor(Color.BLACK);
+            canvas.drawColor(Color.BLACK);
             Rect toScreen2d = new Rect();
 
             drawBackground(0, -3);  // behind Bob (at z=0)
@@ -241,10 +241,10 @@ public class PlatformView extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(100, 0, 0, 0));
             canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
-            /**
+
             canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
             canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, iconSize - centring, paint);
-            canvas.drawBitmap(lm.getBitmap('c'), iconSize * 2.5f + padding, topSpace, paint);
+            /**canvas.drawBitmap(lm.getBitmap('c'), iconSize * 2.5f + padding, topSpace, paint);
             canvas.drawText("" + ps.getNumCredits(), (iconSize * 3.5f) + padding * 2, iconSize - centring, paint);
             canvas.drawBitmap(lm.getBitmap('u'), iconSize * 5.0f + padding, topSpace, paint);
             canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);*/
