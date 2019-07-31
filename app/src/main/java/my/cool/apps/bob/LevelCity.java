@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class LevelCity extends LevelData {
     public LevelCity() {
         tiles = new ArrayList<>();
-        tiles.add("p.............................333333....5555....5555.....5555555...5..5...5....555555555555555555555.....g...g.......t..");
+        tiles.add("p.............................333333....5555....5555.....5555555...5..5...5....555555555555555555555.....g...g..........");
         tiles.add(".u.u.u.u.u.u.u.u..................................................................................55.c.c.c.c.c.c.c.....");
         tiles.add("55555555555555555.......333.......................................................................5555555555555555555555");
         tiles.add(".....................................................................................l..................................");
@@ -25,7 +25,7 @@ public class LevelCity extends LevelData {
         tiles.add("3.....................3.........333333.....33333......................................................333..............3");
         tiles.add("3...3.................3.....l................l...................l...............l....................................l3");
         tiles.add("3...e..cccccccccccccc.3...........................................................d..................g......333........3");
-        tiles.add("3.....3cccccccccccccc....c......c......c..........c.....c.......c.......c..........c..........3.c.......c.......c......3");
+        tiles.add("3.....3cccccccccccccc....c......c......c......t...c.....c.......c.......c..........c..........3.c.......c.......c......3");
         tiles.add("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
 
         // declare the values for the teleports in order of appearance
@@ -34,7 +34,7 @@ public class LevelCity extends LevelData {
 
         backgroundDataList = new ArrayList<>();
         // note that speeds less than 2 cause problems
-        backgroundDataList.add(new BackgroundData("skyline", true, -1, 3, 18, 10, 15 ));
-        backgroundDataList.add(new BackgroundData("grass", true, 1, 20, 24, 24, 4 ));
+        backgroundDataList.add(new BackgroundData("skyline", true, -1, 0, tiles.size(), 10));
+        backgroundDataList.add(new BackgroundData("grass", true, 1, 20, 24, 24));
     }
 }

@@ -36,6 +36,7 @@ public class PlatformView extends SurfaceView implements Runnable {
 
     private SoundManager soundManager;
     private PlayerState ps;
+    private PointF location;
 
 
 
@@ -51,11 +52,11 @@ public class PlatformView extends SurfaceView implements Runnable {
     }
 
     private void loadLevel(String level, float px, float py) {
-        PointF location = new PointF(px, py);
+         location = new PointF(px, py);
         ps.saveLocation(location);
 
         ic = new InputController(vp.getScreenWidth(), vp.getScreenHeight());
-        lm = new LevelManager(context, vp.getPixelsPerMetreX(),
+        lm = new LevelManager(context, vp.getPixelsPerMeterX(),vp.getPixelsPerMeterY(),
                 vp.getScreenWidth(), ic, level, px, py);
         vp.setWorldCenter(
                 lm.gameObjects.get(lm.playerIndex).getWorldLocation().x,
@@ -200,9 +201,9 @@ public class PlatformView extends SurfaceView implements Runnable {
                                  || lm.getPlayer().getWorldLocation().y > lm.getMapHeight()) {
                              soundManager.play(SoundManager.Sound.EXPLODE);
                              ps.loseLife();
-                             PointF location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
-                             lm.getPlayer().setWorldLocationX(location.x);
-                             lm.getPlayer().setWorldLocationY(location.y);
+                             //PointF location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                             lm.getPlayer().setWorldLocationX(ps.loadLocation().x);
+                             lm.getPlayer().setWorldLocationY(ps.loadLocation().y);
                              lm.getPlayer().setxVelocity(0);
                          }
                          // check if game is over
@@ -240,12 +241,13 @@ public class PlatformView extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(100, 0, 0, 0));
             canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
+            /**
             canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
             canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, iconSize - centring, paint);
             canvas.drawBitmap(lm.getBitmap('c'), iconSize * 2.5f + padding, topSpace, paint);
             canvas.drawText("" + ps.getNumCredits(), (iconSize * 3.5f) + padding * 2, iconSize - centring, paint);
             canvas.drawBitmap(lm.getBitmap('u'), iconSize * 5.0f + padding, topSpace, paint);
-            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);
+            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);*/
 
 
             for (int layer = -1; layer <= 1; layer++) {

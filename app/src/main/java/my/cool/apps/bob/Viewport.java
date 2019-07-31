@@ -100,11 +100,6 @@ public class Viewport {
         return  screenYResolution;
     }
 
-    public int getPixelsPerMetreX(){
-        return  pixelsPerMeterX;
-    }
-
-
     public float getyCentre() {
         return 0;
     }
@@ -113,10 +108,10 @@ public class Viewport {
         return currentViewportWorldCenter.y;
     }
 
-    public float getPixelsPerMeterY() {
+    public int getPixelsPerMeterY() {
         return pixelsPerMeterY;
     }
-    public float getPixelsPerMeterX() {
+    public int getPixelsPerMeterX() {
         return pixelsPerMeterX;
     }
 }

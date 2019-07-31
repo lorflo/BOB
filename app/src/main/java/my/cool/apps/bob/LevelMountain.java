@@ -31,8 +31,8 @@ public class LevelMountain extends LevelData {
         this.locations.add(new Location("LevelCave", 1f, 16f));
 
         backgroundDataList = new ArrayList<>();
-        this.backgroundDataList.add(new BackgroundData("mountain", true, -2, -5, 6, 4, 11 ));
-        this.backgroundDataList.add(new BackgroundData("mountainside", true, -1, 6, 20, 8, 14 ));
-        this.backgroundDataList.add(new BackgroundData("grass", true, 1,19, 23, 16, 4 ));
+        this.backgroundDataList.add(new BackgroundData("mountain", true, -2, -5, 6, 4 ));
+        this.backgroundDataList.add(new BackgroundData("mountainside", true, -1, 6, 20, 8));
+        this.backgroundDataList.add(new BackgroundData("grass", true, 1,19, 23, 16));
     }
 }

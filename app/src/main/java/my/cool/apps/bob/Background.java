@@ -31,7 +31,7 @@ public class Background {
         isParallax = data.isParallax;
         speed = data.speed;
         bitmap = Bitmap.createScaledBitmap(bitmap, screenWidth,
-                data.height * yPixelsPerMetre, true);
+               (int)(endY* yPixelsPerMetre), true);
         width = bitmap.getWidth();
         height = bitmap.getHeight();
 

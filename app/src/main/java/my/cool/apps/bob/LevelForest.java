@@ -33,7 +33,7 @@ public class LevelForest extends LevelData {
 
         backgroundDataList = new ArrayList<>();
         // note that speeds less than 2 cause problems
-        this.backgroundDataList.add(new BackgroundData("forest", true, -1, -2, 19, 4, 20 ));
-        this.backgroundDataList.add(new BackgroundData("grass", true, 1, 18, 22, 24, 4 ));
+        this.backgroundDataList.add(new BackgroundData("forest", true, -1, -2, 19, 4 ));
+        this.backgroundDataList.add(new BackgroundData("grass", true, 1, 18, 22, 24 ));
     }
 }

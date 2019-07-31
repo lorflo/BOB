@@ -13,7 +13,7 @@ public class Fire extends GameObject {
         setWidth(WIDTH);
         setType(type);
         setMoves(false);
-        setActive(false);
+        setActive(true);
         setVisible(true);
         setBitmapName(BITMAP_NAME);
         setAnimFps(ANIMATION_FPS);

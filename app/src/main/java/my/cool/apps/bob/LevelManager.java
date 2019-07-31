@@ -23,7 +23,7 @@ public class LevelManager {
     protected ArrayList<Background> backgrounds;
 
     public LevelManager(Context context,
-                        int pixelsPerMeter, int screenWidth,
+                        int pixelsPerMeterX,int pixelsPerMeterY, int screenWidth,
                         InputController ic, String level,
                         float px, float py)
     {
@@ -45,9 +45,9 @@ public class LevelManager {
         }
         gameObjects = new ArrayList<>();
         bitmapsArray = new Bitmap[25];
-        loadMapData(context, pixelsPerMeter, px, py);
+        loadMapData(context, pixelsPerMeterX, px, py);
         setWaypoints();
-        loadBackgrounds(context, pixelsPerMeter, screenWidth);
+        loadBackgrounds(context, pixelsPerMeterY, screenWidth);
         playing = false;
     }
 
