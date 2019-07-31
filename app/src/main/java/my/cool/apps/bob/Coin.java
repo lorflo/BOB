@@ -1,14 +1,25 @@
 package my.cool.apps.bob;
 
+import android.content.Context;
+
 public class Coin extends GameObject
 {
-    public Coin(float worldStartX, float worldStartY, char type) {
-        final float HEIGHT = .5f;
-        final float WIDTH = .5f;
+    public Coin(Context context, float worldStartX, float worldStartY, char type, int pixelsPerMetre) {
+        final int ANIMATION_FPS = 9;
+        final int ANIMATION_FRAME_COUNT = 4;
+        final String BITMAP_NAME = "coinplus";
+        final float HEIGHT = 1;
+        final float WIDTH = 1;
         setHeight(HEIGHT);
         setWidth(WIDTH);
         setType(type);
-        setBitmapName("coin");
+        setMoves(false);
+        setActive(true);
+        setVisible(true);
+        setBitmapName(BITMAP_NAME);
+        setAnimFps(ANIMATION_FPS);
+        setAnimFrameCount(ANIMATION_FRAME_COUNT);
+        setAnimated(context, pixelsPerMetre, true);
         setWorldLocation(worldStartX, worldStartY, 0);
         setRectHitbox();
     }

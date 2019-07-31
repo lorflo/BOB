@@ -193,13 +193,13 @@ public class LevelManager {
                             playerIndex = currentIndex;
                             break;
                         case 'c':
-                            gameObjects.add(new Coin(j, i, c));
+                            gameObjects.add(new Coin(context, j, i, c, pixelsPerMeter));
                             break;
                         case 'u':
                             gameObjects.add(new MachineGunUpgrade(j, i, c));
                             break;
                         case 'e':
-                            gameObjects.add(new ExtraLife(j, i, c));
+                            gameObjects.add(new ExtraLife(context,j, i, c, pixelsPerMeter));
                             break;
                         case 'd':
                             gameObjects.add(new Drone(j, i, c));
