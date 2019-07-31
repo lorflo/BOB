@@ -35,6 +35,6 @@ public class LevelCity extends LevelData {
         backgroundDataList = new ArrayList<>();
         // note that speeds less than 2 cause problems
         backgroundDataList.add(new BackgroundData("skyline", true, -1, 0, tiles.size(), 10));
-        backgroundDataList.add(new BackgroundData("grass", true, 1, 20, 24, 24));
+        backgroundDataList.add(new BackgroundData("grass", true, 1, 29, 34, 24));
     }
 }

@@ -3,6 +3,9 @@ package my.cool.apps.bob;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 
 public abstract class GameObject {
@@ -27,10 +30,33 @@ public abstract class GameObject {
     private boolean animated;
     private int animFps = 1;
     private boolean traversable = false;
+    protected Canvas canvas;
 
 
 
     public void update(long fps, float gravity){}
+    public void draw(Canvas canvas,LevelManager lm,Rect toScreen2d) {
+        Paint paint = new Paint();
+        this.canvas = canvas;
+
+        if (isAnimated()) {
+            if (getFacing() == GameObject.RIGHT) { // rotate and draw?
+                Matrix flipper = new Matrix();
+                flipper.preScale(-1, 1);
+                Rect r = getRectToDraw(System.currentTimeMillis());
+                Bitmap b = Bitmap.createBitmap(lm.getBitmap(getType()),
+                        r.left, r.top, r.width(), r.height(), flipper, true);
+                canvas.drawBitmap(b, toScreen2d.left, toScreen2d.top, paint);
+            } else {
+                canvas.drawBitmap(lm.getBitmap(getType()),
+                        getRectToDraw(System.currentTimeMillis()), toScreen2d, paint);
+            }
+        } else {
+            // no animation; just draw the whole bitmap
+            canvas.drawBitmap(lm.getBitmap(getType()),
+                    toScreen2d.left, toScreen2d.top, paint);
+        }
+    }
 
     public void setAnimFps(int animFps) { this.animFps = animFps; }
     public void setAnimFrameCount(int animFrameCount) { this.animFrameCount = animFrameCount; }
@@ -66,7 +92,6 @@ public abstract class GameObject {
                 (int) (width * animFrameCount * pixelsPerMeter),
                 (int) (height * pixelsPerMeter),
                 false);
-        System.out.println(height * pixelsPerMeter);
         return bitmap;
     }
 

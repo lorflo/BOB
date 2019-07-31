@@ -26,7 +26,7 @@ public class Guard extends GameObject
         setAnimFrameCount(ANIMATION_FRAME_COUNT);
         setAnimated(context, pixelsPerMetre, true);
         setWorldLocation(worldStartX, worldStartY, 0);
-        //setxVelocity(-MAX_X_VELOCITY);
+        setxVelocity(-MAX_X_VELOCITY);
         currentWaypoint = LEFT;
     }
 

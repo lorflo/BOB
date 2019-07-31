@@ -2,6 +2,7 @@ package my.cool.apps.bob;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -158,10 +159,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 loadLevel(target.level, target.x, target.y);
                                 soundManager.play(SoundManager.Sound.TELEPORT);
                                 break;
-
-
                         }
-
                     }
                     for (int i = 0; i < lm.getPlayer().getBfg().getNumBullets(); i++) {
                         RectHitbox r = new RectHitbox();
@@ -185,7 +183,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                             }
                         }
                     }
-
                     if (lm.isPlaying())
                      {
                      go.update(fps, lm.getGravity());
@@ -211,8 +208,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                              ps = new PlayerState();
                              loadLevel("LevelCave", 1, 16);
                          }
-
-
                      }
                 }
                 else {
@@ -242,9 +237,10 @@ public class PlatformView extends SurfaceView implements Runnable {
             canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
 
-            canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
+            /**canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
             canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, iconSize - centring, paint);
-            /**canvas.drawBitmap(lm.getBitmap('c'), iconSize * 2.5f + padding, topSpace, paint);
+            canvas.drawBitmap(BitmapFactory.decodeResource(
+                    context.getResources(),(R.drawable.coin)), iconSize * 2.5f + padding, topSpace, paint);
             canvas.drawText("" + ps.getNumCredits(), (iconSize * 3.5f) + padding * 2, iconSize - centring, paint);
             canvas.drawBitmap(lm.getBitmap('u'), iconSize * 5.0f + padding, topSpace, paint);
             canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);*/
@@ -255,33 +251,11 @@ public class PlatformView extends SurfaceView implements Runnable {
                     if (go.isVisible() && go.getWorldLocation().z == layer) {
                         toScreen2d.set(vp.worldToScreen(go.getWorldLocation().x,go.getWorldLocation().y,
                                 go.getWidth(), go.getHeight()));
-                        if (go.isAnimated())
-                        {
-                            if (go.getFacing() == GameObject.RIGHT)
-                            { // rotate and draw?
-                                Matrix flipper = new Matrix();
-                                flipper.preScale(-1, 1);
-                                Rect r = go.getRectToDraw(System.currentTimeMillis());
-                                Bitmap b = Bitmap.createBitmap(lm.getBitmap(go.getType()),
-                                        r.left, r.top, r.width(), r.height(), flipper, true);
-                                canvas.drawBitmap(b, toScreen2d.left, toScreen2d.top, paint);
-                            }
-                            else
-                                {
-                                canvas.drawBitmap(lm.getBitmap(go.getType()),
-                                        go.getRectToDraw(System.currentTimeMillis()), toScreen2d, paint);
-                                }
-                        }
-                        else
-                            {
-                                // no animation; just draw the whole bitmap
-                            canvas.drawBitmap(lm.getBitmap(go.getType()),
-                                   toScreen2d.left, toScreen2d.top, paint);
-                            }
+                       go.draw(canvas,lm,toScreen2d);
                     }
                 }
-                drawBackground(4, 0);   // in front of Bob
             }
+            drawBackground(4, 0);   // in front of Bob
             //draw buttons
             paint.setColor(Color.argb(80, 255, 255, 255));
             ArrayList<Rect> buttonsToDraw;

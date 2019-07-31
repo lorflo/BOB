@@ -1,6 +1,9 @@
 package my.cool.apps.bob;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 
 public class Player extends GameObject
 {
@@ -102,6 +105,7 @@ public class Player extends GameObject
             setFacing(LEFT);
         }
     }
+
     public int checkCollisions(RectHitbox rectHitbox) {
         int collided = 0; // no collision
         if (this.rectHitboxLeft.intersects(rectHitbox)) {
