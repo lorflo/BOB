@@ -57,15 +57,16 @@ public abstract class GameObject {
     }
 
     public Bitmap prepareBitmap(Context context,
-                                String bitmapName, int pixelsPerMetre) {
+                                String bitmapName, int pixelsPerMeter) {
         int resId = context.getResources().getIdentifier(bitmapName,
                 "drawable", context.getPackageName());
         Bitmap bitmap = BitmapFactory.decodeResource(
                 context.getResources(), resId);
         bitmap = Bitmap.createScaledBitmap(bitmap,
-                (int) (width * animFrameCount * pixelsPerMetre),
-                (int) (height * pixelsPerMetre),
+                (int) (width * animFrameCount * pixelsPerMeter),
+                (int) (height * pixelsPerMeter),
                 false);
+        System.out.println(height * pixelsPerMeter);
         return bitmap;
     }
 
