@@ -21,6 +21,7 @@ public class LevelManager {
     protected List<Rect> currentButtons;
     protected Bitmap[] bitmapsArray;
     protected ArrayList<Background> backgrounds;
+    protected int pixelScale;
 
     public LevelManager(Context context,
                         int pixelsPerMeterX,int pixelsPerMeterY, int screenWidth,
@@ -44,10 +45,11 @@ public class LevelManager {
 
         }
         gameObjects = new ArrayList<>();
-        bitmapsArray = new Bitmap[25];
+        bitmapsArray = new Bitmap[screenWidth];
         loadMapData(context, pixelsPerMeterX, px, py);
         setWaypoints();
         loadBackgrounds(context, pixelsPerMeterY, screenWidth);
+        pixelScale = pixelsPerMeterX;
         playing = false;
     }
 
@@ -60,7 +62,7 @@ public class LevelManager {
 
 
     public int getBitmapIndex(char blockType) {
-        int index = 0;
+        int index;
         switch (blockType) {
             case '.':
                 index = 0;
@@ -134,7 +136,15 @@ public class LevelManager {
             case 'o':
                 index = 23;
                 break;
-
+            case 'C':
+                index = 24;
+                break;
+            case 'E':
+                index = 25;
+                break;
+            case 'O':
+                index = 26;
+                break;
             default:
                 index = 0;
                 break;
@@ -257,9 +267,19 @@ public class LevelManager {
                             gameObjects.add(new Boulder(j, i, c));
                             break;
                         case 't':
-                            teleportIndex++;
+                            teleportIndex = 0;
+
                             gameObjects.add(new Teleport(j, i, c,
                                     levelData.locations.get(teleportIndex)));
+                            break;
+                        case 'C':
+                            gameObjects.add(new CoinIcon(j,i,c));
+                            break;
+                        case 'E':
+                            gameObjects.add(new LifeIcon(j,i,c));
+                            break;
+                        case 'O':
+                            gameObjects.add(new ShieldIcon(j,i,c));
                             break;
 
                     }

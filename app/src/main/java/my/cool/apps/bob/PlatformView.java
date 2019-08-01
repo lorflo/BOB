@@ -39,8 +39,6 @@ public class PlatformView extends SurfaceView implements Runnable {
     protected PlayerState ps;
     private PointF location;
 
-
-
     public PlatformView(Context context, int screenWidth, int screenHeight) {
         super(context);
         this.context = context;
@@ -253,21 +251,27 @@ public class PlatformView extends SurfaceView implements Runnable {
             // draw the HUD
             int topSpace = (int)vp.getPixelsPerMeterY() / 4;
             int iconSize = (int)vp.getPixelsPerMeterX();
-            int padding = (int)vp.getPixelsPerMeterX() / 5;
+            int padding = (int)vp.getPixelsPerMeterX() / 6;
             int centring = (int)vp.getPixelsPerMeterY() / 6;
             paint.setTextSize(vp.getPixelsPerMeterY() / 2);
             paint.setTextAlign(Paint.Align.CENTER);
             paint.setColor(Color.argb(100, 0, 0, 0));
-            canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
+            canvas.drawRect(0,0,iconSize * 8.5f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
 
-            /**canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
+
+
+            canvas.drawBitmap(lm.getBitmap('E'), 0, topSpace, paint);
             canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, iconSize - centring, paint);
-            canvas.drawBitmap(BitmapFactory.decodeResource(
-                    context.getResources(),(R.drawable.coin)), iconSize * 2.5f + padding, topSpace, paint);
+
+            canvas.drawBitmap(lm.getBitmap('C'), iconSize * 2.5f + padding, topSpace, paint);
             canvas.drawText("" + ps.getNumCredits(), (iconSize * 3.5f) + padding * 2, iconSize - centring, paint);
+
             canvas.drawBitmap(lm.getBitmap('u'), iconSize * 5.0f + padding, topSpace, paint);
-            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);*/
+            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);
+
+            canvas.drawBitmap(lm.getBitmap('O'), iconSize * 7.5f + padding, topSpace, paint);
+            canvas.drawText("" + ps.getNumShield(), iconSize * 8.5f + padding * 2, iconSize - centring, paint);
 
 
             for (int layer = -1; layer <= 1; layer++) {

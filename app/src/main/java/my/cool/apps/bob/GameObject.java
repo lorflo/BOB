@@ -32,8 +32,12 @@ public abstract class GameObject {
     private boolean traversable = false;
     protected Canvas canvas;
     protected Paint paint;
+    private  Bitmap bitmapCoin;
+    private  Bitmap bitmapLife;
+    private  Bitmap bitmapShield;
 
     public GameObject() {
+
     }
 
 
