@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class LevelData {
     protected List<String> tiles;
-    protected List<BackgroundData> backgroundDataList;
+    protected List<BackgroundData> backgroundDataList = new ArrayList<>();
     protected List<Location> locations;
 
 }

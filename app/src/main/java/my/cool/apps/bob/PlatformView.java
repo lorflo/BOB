@@ -2,6 +2,7 @@ package my.cool.apps.bob;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -35,10 +36,8 @@ public class PlatformView extends SurfaceView implements Runnable {
     private InputController ic;
 
     private SoundManager soundManager;
-    private PlayerState ps;
+    protected PlayerState ps;
     private PointF location;
-
-
 
     public PlatformView(Context context, int screenWidth, int screenHeight) {
         super(context);
@@ -102,6 +101,15 @@ public class PlatformView extends SurfaceView implements Runnable {
                                     lm.getPlayer().restorePreviousVelocity();
                                 }
                                 break;
+                            case 'o':
+                                soundManager.play(SoundManager.Sound.EXTRA_LIFE);
+                                go.setActive(false);
+                                go.setVisible(false);
+                                ps.addShield();
+                                if (hit != 2) { // hit not by feet
+                                    lm.getPlayer().restorePreviousVelocity();
+                                }
+                                break;
                             case 'e':
                                 go.setActive(false);
                                 go.setVisible(false);
@@ -113,22 +121,36 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 break;
                             case 'd':
                                 soundManager.play(SoundManager.Sound.EXPLODE);
-                                ps.loseLife();
-                                PointF loc= new PointF(ps.loadLocation().x,
-                                        ps.loadLocation().y);
-                                lm.getPlayer().setWorldLocationX(loc.x);
-                                lm.getPlayer().setWorldLocationY(loc.y);
-                                lm.getPlayer().setxVelocity(0);
+                                if(ps.getNumShield() == 0) {
+                                    ps.loseLife();
+                                    PointF loc = new PointF(ps.loadLocation().x,
+                                            ps.loadLocation().y);
+                                    lm.getPlayer().setWorldLocationX(loc.x);
+                                    lm.getPlayer().setWorldLocationY(loc.y);
+                                    lm.getPlayer().setxVelocity(0);
+                                }
+                                else
+                                {
+                                    go.setWorldLocation(-100, -100, 0);
+                                    ps.loseSheild();
+                                }
                                 break;
                             case 'g':
-                                soundManager.play(SoundManager.Sound.EXPLODE);
-                                ps.loseLife();
-                                loc = new PointF(ps.loadLocation().x, ps.loadLocation().y);
-                                lm.getPlayer().setWorldLocationX(loc.x);
-                                lm.getPlayer().setWorldLocationY(loc.y);
-                                lm.getPlayer().setxVelocity(0);
+                                if(ps.getNumShield() == 0) {
+                                    soundManager.play(SoundManager.Sound.EXPLODE);
+                                    ps.loseLife();
+                                    PointF loc = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                                    lm.getPlayer().setWorldLocationX(loc.x);
+                                    lm.getPlayer().setWorldLocationY(loc.y);
+                                    lm.getPlayer().setxVelocity(0);
+                                }
+                                else
+                                {
+                                    go.setWorldLocationX(go.getWorldLocation().x + 2 * (lm.getPlayer().getFacing()));
+                                    soundManager.play(SoundManager.Sound.HIT_GUARD);
+                                    ps.loseSheild();
+                                }
                                 break;
-
                             case 'u':
                                 soundManager.play(SoundManager.Sound.GUN_UPGRADE);
                                 go.setActive(false);
@@ -159,9 +181,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 soundManager.play(SoundManager.Sound.TELEPORT);
                                 break;
 
-
                         }
-
                     }
                     for (int i = 0; i < lm.getPlayer().getBfg().getNumBullets(); i++) {
                         RectHitbox r = new RectHitbox();
@@ -185,7 +205,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                             }
                         }
                     }
-
                     if (lm.isPlaying())
                      {
                      go.update(fps, lm.getGravity());
@@ -209,10 +228,8 @@ public class PlatformView extends SurfaceView implements Runnable {
                          // check if game is over
                          if (ps.getLives() == 0) {
                              ps = new PlayerState();
-                             loadLevel("LevelCave", 1, 16);
+                             loadLevel("LevelCave", 15, 2);
                          }
-
-
                      }
                 }
                 else {
@@ -234,20 +251,27 @@ public class PlatformView extends SurfaceView implements Runnable {
             // draw the HUD
             int topSpace = (int)vp.getPixelsPerMeterY() / 4;
             int iconSize = (int)vp.getPixelsPerMeterX();
-            int padding = (int)vp.getPixelsPerMeterX() / 5;
+            int padding = (int)vp.getPixelsPerMeterX() / 6;
             int centring = (int)vp.getPixelsPerMeterY() / 6;
             paint.setTextSize(vp.getPixelsPerMeterY() / 2);
             paint.setTextAlign(Paint.Align.CENTER);
             paint.setColor(Color.argb(100, 0, 0, 0));
-            canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
+            canvas.drawRect(0,0,iconSize * 8.5f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
 
-            canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
+
+
+            canvas.drawBitmap(lm.getBitmap('E'), 0, topSpace, paint);
             canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, iconSize - centring, paint);
-            /**canvas.drawBitmap(lm.getBitmap('c'), iconSize * 2.5f + padding, topSpace, paint);
+
+            canvas.drawBitmap(lm.getBitmap('C'), iconSize * 2.5f + padding, topSpace, paint);
             canvas.drawText("" + ps.getNumCredits(), (iconSize * 3.5f) + padding * 2, iconSize - centring, paint);
+
             canvas.drawBitmap(lm.getBitmap('u'), iconSize * 5.0f + padding, topSpace, paint);
-            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);*/
+            canvas.drawText("" + ps.getMgFireRate(), iconSize * 6.0f + padding * 2, iconSize - centring, paint);
+
+            canvas.drawBitmap(lm.getBitmap('O'), iconSize * 7.5f + padding, topSpace, paint);
+            canvas.drawText("" + ps.getNumShield(), iconSize * 8.5f + padding * 2, iconSize - centring, paint);
 
 
             for (int layer = -1; layer <= 1; layer++) {
@@ -255,33 +279,11 @@ public class PlatformView extends SurfaceView implements Runnable {
                     if (go.isVisible() && go.getWorldLocation().z == layer) {
                         toScreen2d.set(vp.worldToScreen(go.getWorldLocation().x,go.getWorldLocation().y,
                                 go.getWidth(), go.getHeight()));
-                        if (go.isAnimated())
-                        {
-                            if (go.getFacing() == GameObject.RIGHT)
-                            { // rotate and draw?
-                                Matrix flipper = new Matrix();
-                                flipper.preScale(-1, 1);
-                                Rect r = go.getRectToDraw(System.currentTimeMillis());
-                                Bitmap b = Bitmap.createBitmap(lm.getBitmap(go.getType()),
-                                        r.left, r.top, r.width(), r.height(), flipper, true);
-                                canvas.drawBitmap(b, toScreen2d.left, toScreen2d.top, paint);
-                            }
-                            else
-                                {
-                                canvas.drawBitmap(lm.getBitmap(go.getType()),
-                                        go.getRectToDraw(System.currentTimeMillis()), toScreen2d, paint);
-                                }
-                        }
-                        else
-                            {
-                                // no animation; just draw the whole bitmap
-                            canvas.drawBitmap(lm.getBitmap(go.getType()),
-                                   toScreen2d.left, toScreen2d.top, paint);
-                            }
+                       go.draw(canvas,lm,toScreen2d,ps);
                     }
                 }
-                drawBackground(4, 0);   // in front of Bob
             }
+            drawBackground(4, 0);   // in front of Bob
             //draw buttons
             paint.setColor(Color.argb(80, 255, 255, 255));
             ArrayList<Rect> buttonsToDraw;
