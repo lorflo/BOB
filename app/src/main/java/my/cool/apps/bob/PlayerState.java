@@ -7,7 +7,7 @@ public class PlayerState
     private int numCredits;
     private int mgFireRate;
     private int lives;
-    private int sheild;
+    private int shields;
     private float restartX = 0;
     private float restartY = 0;
     private PointF loc;
@@ -16,6 +16,7 @@ public class PlayerState
         lives = 3;
         mgFireRate = 1;
         numCredits = 0;
+        shields = 0;
         loc = new PointF(restartX,restartY);
     }
 
@@ -64,5 +65,15 @@ public class PlayerState
         return lives;
     }
 
-
+    public void addShield()
+    {
+        shields++;
+    }
+    public int getNumShield() {
+        return shields;
+    }
+    public void loseSheild()
+    {
+        shields--;
+    }
 }

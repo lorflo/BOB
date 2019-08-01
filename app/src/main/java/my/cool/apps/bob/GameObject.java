@@ -31,14 +31,17 @@ public abstract class GameObject {
     private int animFps = 1;
     private boolean traversable = false;
     protected Canvas canvas;
+    protected Paint paint;
 
+    public GameObject() {
+    }
 
 
     public void update(long fps, float gravity){}
-    public void draw(Canvas canvas,LevelManager lm,Rect toScreen2d) {
-        Paint paint = new Paint();
-        this.canvas = canvas;
-
+    public void draw(Canvas canvas,LevelManager lm,Rect toScreen2d,PlayerState playerState) {
+         this. paint = new Paint();
+         this.canvas = canvas;
+         PlayerState ps = playerState;
         if (isAnimated()) {
             if (getFacing() == GameObject.RIGHT) { // rotate and draw?
                 Matrix flipper = new Matrix();

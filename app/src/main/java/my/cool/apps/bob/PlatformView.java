@@ -36,7 +36,7 @@ public class PlatformView extends SurfaceView implements Runnable {
     private InputController ic;
 
     private SoundManager soundManager;
-    private PlayerState ps;
+    protected PlayerState ps;
     private PointF location;
 
 
@@ -103,6 +103,15 @@ public class PlatformView extends SurfaceView implements Runnable {
                                     lm.getPlayer().restorePreviousVelocity();
                                 }
                                 break;
+                            case 'o':
+                                soundManager.play(SoundManager.Sound.EXTRA_LIFE);
+                                go.setActive(false);
+                                go.setVisible(false);
+                                ps.addShield();
+                                if (hit != 2) { // hit not by feet
+                                    lm.getPlayer().restorePreviousVelocity();
+                                }
+                                break;
                             case 'e':
                                 go.setActive(false);
                                 go.setVisible(false);
@@ -114,22 +123,36 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 break;
                             case 'd':
                                 soundManager.play(SoundManager.Sound.EXPLODE);
-                                ps.loseLife();
-                                PointF loc= new PointF(ps.loadLocation().x,
-                                        ps.loadLocation().y);
-                                lm.getPlayer().setWorldLocationX(loc.x);
-                                lm.getPlayer().setWorldLocationY(loc.y);
-                                lm.getPlayer().setxVelocity(0);
+                                if(ps.getNumShield() == 0) {
+                                    ps.loseLife();
+                                    PointF loc = new PointF(ps.loadLocation().x,
+                                            ps.loadLocation().y);
+                                    lm.getPlayer().setWorldLocationX(loc.x);
+                                    lm.getPlayer().setWorldLocationY(loc.y);
+                                    lm.getPlayer().setxVelocity(0);
+                                }
+                                else
+                                {
+                                    go.setWorldLocation(-100, -100, 0);
+                                    ps.loseSheild();
+                                }
                                 break;
                             case 'g':
-                                soundManager.play(SoundManager.Sound.EXPLODE);
-                                ps.loseLife();
-                                loc = new PointF(ps.loadLocation().x, ps.loadLocation().y);
-                                lm.getPlayer().setWorldLocationX(loc.x);
-                                lm.getPlayer().setWorldLocationY(loc.y);
-                                lm.getPlayer().setxVelocity(0);
+                                if(ps.getNumShield() == 0) {
+                                    soundManager.play(SoundManager.Sound.EXPLODE);
+                                    ps.loseLife();
+                                    PointF loc = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                                    lm.getPlayer().setWorldLocationX(loc.x);
+                                    lm.getPlayer().setWorldLocationY(loc.y);
+                                    lm.getPlayer().setxVelocity(0);
+                                }
+                                else
+                                {
+                                    go.setWorldLocationX(go.getWorldLocation().x + 2 * (lm.getPlayer().getFacing()));
+                                    soundManager.play(SoundManager.Sound.HIT_GUARD);
+                                    ps.loseSheild();
+                                }
                                 break;
-
                             case 'u':
                                 soundManager.play(SoundManager.Sound.GUN_UPGRADE);
                                 go.setActive(false);
@@ -159,6 +182,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 loadLevel(target.level, target.x, target.y);
                                 soundManager.play(SoundManager.Sound.TELEPORT);
                                 break;
+
                         }
                     }
                     for (int i = 0; i < lm.getPlayer().getBfg().getNumBullets(); i++) {
@@ -206,7 +230,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                          // check if game is over
                          if (ps.getLives() == 0) {
                              ps = new PlayerState();
-                             loadLevel("LevelCave", 1, 16);
+                             loadLevel("LevelCave", 15, 2);
                          }
                      }
                 }
@@ -251,7 +275,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                     if (go.isVisible() && go.getWorldLocation().z == layer) {
                         toScreen2d.set(vp.worldToScreen(go.getWorldLocation().x,go.getWorldLocation().y,
                                 go.getWidth(), go.getHeight()));
-                       go.draw(canvas,lm,toScreen2d);
+                       go.draw(canvas,lm,toScreen2d,ps);
                     }
                 }
             }

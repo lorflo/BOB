@@ -3,6 +3,8 @@ package my.cool.apps.bob;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class Player extends GameObject
@@ -19,6 +21,8 @@ public class Player extends GameObject
     private RectHitbox rectHitboxLeft;
     private RectHitbox rectHitboxRight;
     private MachineGun bfg;
+    private float lx;
+    private float ly;
 
 
 
@@ -77,8 +81,9 @@ public class Player extends GameObject
         bfg.update(fps, gravity);
         move(fps);
 
-        float lx = location.x;
-        float ly = location.y;
+
+        lx = location.x;
+        ly = location.y;
         rectHitboxFeet.setTop(ly + getHeight() * .95f);
         rectHitboxFeet.setLeft(lx + getWidth() * .2f);
         rectHitboxFeet.setBottom(ly + getHeight() * .98f);
@@ -106,8 +111,20 @@ public class Player extends GameObject
             setFacing(LEFT);
         }
     }
-   public void draw(Canvas canvas,LevelManager lm,Rect toScreen2d)
+   public void draw(Canvas canvas,LevelManager lm,Rect toScreen2d,PlayerState ps)
    {
+       super.draw(canvas,lm,toScreen2d,ps);
+       paint.setColor(Color.argb(100,135,206,250));
+       int cx = toScreen2d.left + lm.getBitmap(getType()).getWidth() / 6;
+       int cy = toScreen2d.top + lm.getBitmap(getType()).getHeight() / 2;
+       int cxR = toScreen2d.right - lm.getBitmap(getType()).getWidth() / 6;
+       int radius =  lm.getBitmap(getType()).getHeight() /2;
+       if(ps.getNumShield() != 0) {
+           if(getFacing() == LEFT)
+           canvas.drawCircle(cx, cy, radius, paint);
+           else
+               canvas.drawCircle(cxR,cy,radius, paint);
+       }
 
    }
     public int checkCollisions(RectHitbox rectHitbox) {

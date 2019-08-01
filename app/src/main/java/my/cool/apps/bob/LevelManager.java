@@ -131,6 +131,9 @@ public class LevelManager {
             case 't':
                 index = 22;
                 break;
+            case 'o':
+                index = 23;
+                break;
 
             default:
                 index = 0;

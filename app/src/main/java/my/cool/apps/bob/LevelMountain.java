@@ -16,7 +16,7 @@ public class LevelMountain extends LevelData {
         tiles.add("........................................................................................................................");
         tiles.add("..2.......................2..........................2.......................2..........................................");
         tiles.add("........................................................................................................................");
-        tiles.add(".......2.....2...2..2...2...............................2.................2.............................................");
+        tiles.add(".......2.....2...2..2...2...............................2..........t......2.............................................");
         tiles.add("........................................................................................................................");
         tiles.add(".....2.2....................................................2..2..222222................................................");
         tiles.add("........................................................................................................................");
@@ -31,8 +31,8 @@ public class LevelMountain extends LevelData {
         this.locations.add(new Location("LevelCave", 1f, 16f));
 
         backgroundDataList = new ArrayList<>();
-        this.backgroundDataList.add(new BackgroundData("mountain", true, -2, -5, 6, 4 ));
-        this.backgroundDataList.add(new BackgroundData("mountainside", true, -1, 6, 20, 8));
-        this.backgroundDataList.add(new BackgroundData("grass", true, 1,19, 23, 16));
+        this.backgroundDataList.add(new BackgroundData("mountain", true, -2, -5, 0, 4));
+        this.backgroundDataList.add(new BackgroundData("mountainside", true, -1, 0, tiles.size(), 8));
+        this.backgroundDataList.add(new BackgroundData("grass", true, 1, 29, 34, 16));
     }
 }
