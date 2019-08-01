@@ -13,7 +13,8 @@ public class SoundManager {
         JUMP(R.raw.jump),
         RICOCHET(R.raw.ricochet),
         SHOOT(R.raw.shoot),
-        TELEPORT(R.raw.teleport);
+        TELEPORT(R.raw.teleport),
+        SHIELD(R.raw.shield);
 
         public final int resourceId;
         private int soundId;

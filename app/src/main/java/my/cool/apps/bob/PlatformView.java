@@ -102,7 +102,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 }
                                 break;
                             case 'o':
-                                soundManager.play(SoundManager.Sound.EXTRA_LIFE);
+                                soundManager.play(SoundManager.Sound.SHIELD);
                                 go.setActive(false);
                                 go.setVisible(false);
                                 ps.addShield();
